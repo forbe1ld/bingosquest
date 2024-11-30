@@ -8,7 +8,7 @@ public class Player {
 	private String name = "Bingo";
 	
 	//Initialized to be 10 at start of new game and scales with vitality stat
-	private int hp;
+	int hp;
 	private int hpMax;
 	
 	//Initialized to be 10 at start of new game and scales with source stat
@@ -35,11 +35,11 @@ public class Player {
 	private String arch;
 	
 	//Initialized to be 1 at start of new game
-	private int lvl;
+	int lvl;
 	
 	//Initialized to be 0 at start of new game
 	private int xp;
-	private int gold;
+	int gold;
 	
 	//stats
 	private int str; //strength -> scales physical damage

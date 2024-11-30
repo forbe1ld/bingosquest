@@ -1,4 +1,3 @@
-
 import java.util.Random;
 
 import javafx.geometry.Insets;
@@ -9,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -50,11 +50,6 @@ public class SceneHandler {
 		});
 		
 		Button endCombatSceneBtn = new Button("End CombatScene");
-		if (player.getXp() >= xpToNextLvl) {
-		    player.levelUp(); // Assuming a method exists for leveling up the player
-		    regenerateMonsters(grid); // Regenerate monsters on all ENCGRASS tiles
-		}
-		
 		endCombatSceneBtn.setOnAction(event->{
 			try {
 				SceneHandler.loadEndCombatScene(stage, player, null, 3);
@@ -73,6 +68,16 @@ public class SceneHandler {
 			}
 		});
 		
+		Button saveGameBtn = new Button("save Game");
+		saveGameBtn.setOnAction(event -> {
+			try {
+				Inventory inventory = new Inventory(player, null, null, null);
+				SaveLoadManager.saveGame(player,  inventory);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		});
+		
 		Button quitSceneBtn = new Button("Quit Application");
 		quitSceneBtn.setOnAction(event->{
 			stage.close();
@@ -80,27 +85,20 @@ public class SceneHandler {
 		
 		VBox buttons = new VBox();
 		
-		buttons.getChildren().addAll(combatSceneBtn, shopSceneBtn, endCombatSceneBtn, statusStageBtn, quitSceneBtn);
+		buttons.getChildren().addAll(combatSceneBtn, shopSceneBtn, endCombatSceneBtn, statusStageBtn, saveGameBtn, quitSceneBtn);
 		buttons.setAlignment(Pos.CENTER);
 		
 		
 		pane.setTop(new StackPane(new Label("Map Scene")));
 		pane.setCenter(buttons);
 		
-		Scene mainScene = new Scene(pane, 1024, 768);
+		Scene mainScene = new Scene(pane, 800, 600);
 		
 		stage.setScene(mainScene);
 		stage.show();
 	}
 	
 	public static void loadCombatScene(Stage stage, Player player) throws Exception{
-		Enemy tempEnemy = grid[playerX][playerY].getMonster();
-		if (tempEnemy == null) {
-		    return; // No monster to encounter
-		}
-
-		// Proceed with combat setup
-
 		MutableBoolean isBattling = new MutableBoolean(true);
 		Enemy enemy = EnemyCatalog.enemyFromCatalog(4);
 		
@@ -454,7 +452,7 @@ public class SceneHandler {
 			}
 		});
 		
-		Scene combatScene = new Scene(pane, 1024, 768);
+		Scene combatScene = new Scene(pane, 800, 600);
 		
 		stage.setScene(combatScene);
 		stage.show();
@@ -681,7 +679,7 @@ public class SceneHandler {
 		
 		content.getChildren().add(cont);
 		
-		Scene mainScene = new Scene(pane, 1024, 768);
+		Scene mainScene = new Scene(pane, 800, 600);
 		
 		stage.setScene(mainScene);
 		stage.show();
@@ -694,26 +692,57 @@ public class SceneHandler {
 		pane.setTop(new StackPane(new Label("Shop Scene")));
 		pane.setBottom(mainSceneBtn);
 		
-		shopItem healthPotion = new shopItem("Health Potion", 15);
-		shopItem greatHealthPotion = new shopItem("Great Health Potion", 40);
-		
-//		TableView table = new TableView();
-//		table.setEditable(false);
+//		//potions
+//		shopItem healthPotion = new shopItem("Health Potion", player.getHealthPotion(), 0, 15);
+//		shopItem greatHealthPotion = new shopItem("Great Health Potion", player.getGreatHealthPotion(), 0, 40);
+//		shopItem manaPotion = new shopItem("Mana Potion", player.getManaPotion(), 0, 15);
+//		shopItem greatManaPotion = new shopItem("Great Mana Potion", player.getGreatManaPotion(), 0, 40);
 //		
-//		TableColumn toolsCol = new TableColumn("Tools");
-//		TableColumn<String> dumb = new TableColumn<>("jfiejf");
+//		//tools
+//		shopItem weapon = new shopItem("Weapon", 0, player.getWeapon(), (player.getWeapon() * 20));
+//		shopItem attackSpell = new shopItem("Attack Spell", 0, player.getAtkSpell(), (player.getAtkSpell() * 20));
+//		shopItem healSpell = new shopItem("Heal Spell", 0, player.getHealSpell(), (player.getHealSpell() * 20));
 		
-//        TableColumn firstNameCol = new TableColumn("First Name");
-//        TableColumn lastNameCol = new TableColumn("Last Name");
-//        TableColumn emailCol = new TableColumn("Email");
-//        TableColumn firstEmailCol = new TableColumn("Primary");
-//        TableColumn secondEmailCol = new TableColumn("Secondary");
-//
-//        emailCol.getColumns().addAll(firstEmailCol, secondEmailCol);
-//        
-//        table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
+		//table for consumable items
+		TableView<shopItem> itemsTable = new TableView<>();
+		itemsTable.setEditable(false);
+		
+		//creating the columns for the itemsTable
+		TableColumn<shopItem, String> nameICol = new TableColumn<>("Name:");
+		nameICol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		
+		TableColumn<shopItem, Integer> quantityICol = new TableColumn<>("Quantity:");
+		quantityICol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+		
+		TableColumn<shopItem, Integer> costICol = new TableColumn<>("Cost:");
+		costICol.setCellValueFactory(new PropertyValueFactory<>("cost"));
+		
+		itemsTable.getColumns().addAll(nameICol, quantityICol, costICol);
+		itemsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		
+//		itemsTable.getItems().addAll(healthPotion, greatHealthPotion, manaPotion, greatManaPotion);
+		
+		
+		//table for weapon and spells
+		TableView<shopItem> toolsTable = new TableView<>();
+		
+		//creating the columns for the toolsTable
+		TableColumn<shopItem, String> nameTCol = new TableColumn<>("Name:");
+		nameICol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		
+		TableColumn<shopItem, Integer> levelTCol = new TableColumn<>("Level:");
+		quantityICol.setCellValueFactory(new PropertyValueFactory<>("level"));
+		
+		TableColumn<shopItem, Integer> costTCol = new TableColumn<>("Cost:");
+		costICol.setCellValueFactory(new PropertyValueFactory<>("cost"));
+		
+		toolsTable.getColumns().addAll(nameTCol, levelTCol, costTCol);
+		toolsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		
+//		toolsTable.getItems().addAll(weapon, attackSpell, healSpell);
+		
         
-//        pane.setCenter(table);
+		pane.setCenter(itemsTable);
 		
 		mainSceneBtn.setOnAction(event->{
 			try {
@@ -724,7 +753,7 @@ public class SceneHandler {
 			}
 		});
 		
-		Scene shopScene = new Scene(pane, 1024, 768);
+		Scene shopScene = new Scene(pane, 800, 600);
 		
 		stage.setScene(shopScene);
 		stage.show();

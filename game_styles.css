@@ -1,0 +1,34 @@
+
+@font-face {
+    font-family: 'alagard';
+    src: url('alagard.ttf');
+}
+
+.root {
+    -fx-font-family: 'alagard';
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-font-family: 'alagard';
+    -fx-font-size: 24px;
+    -fx-background-color: linear-gradient(#333, #111);
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#444, #222);
+    -fx-border-color: yellow;
+}
+
+.label {
+    -fx-font-family: 'alagard';
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+}
