@@ -50,6 +50,11 @@ public class SceneHandler {
 		});
 		
 		Button endCombatSceneBtn = new Button("End CombatScene");
+		if (player.getXp() >= xpToNextLvl) {
+		    player.levelUp(); // Assuming a method exists for leveling up the player
+		    regenerateMonsters(grid); // Regenerate monsters on all ENCGRASS tiles
+		}
+		
 		endCombatSceneBtn.setOnAction(event->{
 			try {
 				SceneHandler.loadEndCombatScene(stage, player, null, 3);
@@ -89,6 +94,13 @@ public class SceneHandler {
 	}
 	
 	public static void loadCombatScene(Stage stage, Player player) throws Exception{
+		Enemy tempEnemy = grid[playerX][playerY].getMonster();
+		if (tempEnemy == null) {
+		    return; // No monster to encounter
+		}
+
+		// Proceed with combat setup
+
 		MutableBoolean isBattling = new MutableBoolean(true);
 		Enemy enemy = EnemyCatalog.enemyFromCatalog(4);
 		

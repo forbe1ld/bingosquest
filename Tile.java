@@ -1,5 +1,3 @@
-package com.cmu;
-
 public class Tile {
     // Constants representing different types of tiles
     public static final String GRASS = "GRASS";
@@ -14,6 +12,7 @@ public class Tile {
     private String color;      // Visual color of the tile (for display purposes)
     private boolean isWalkable; // Indicates if the tile can be walked on
     private boolean hasEncounter; // Indicates if the tile has a special encounter (e.g., dungeon)
+    private Enemy monster; // Associated monster for ENCGRASS tiles
 
     /**
      * Sets the type of the tile and adjusts its properties based on the type.
@@ -100,5 +99,14 @@ public class Tile {
             System.out.println("Encounter available!"); // Display encounter info if present
         }
     }
+
+    public Enemy getMonster() {
+        return monster;
+    }
+
+	public void setMonster(Enemy newMonster) {
+		this.monster = monster;
+		
+	}
 
 }

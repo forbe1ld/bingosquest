@@ -1,5 +1,3 @@
-package com.cmu;
-
 public class Map 
 {
     private Tile[][] grid; // 2D array of Tiles representing the game map
@@ -35,6 +33,23 @@ public class Map
                                  grid[i][j].getTileType().equals(Tile.VILLAGE) ? "[V]" : "[ ]");
             }
             System.out.println();
+        }
+    }
+    
+    public static void regenerateMonsters(Tile[][] grid) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                Tile tile = grid[i][j];
+                if (tile.getTileType().equals(Tile.ENCGRASS)) {
+                    if (tile.getMonster() != null) {
+                        tile.getMonster().setHp(tile.getMonster().getHpMax()); // Reset HP
+                    } else {
+                        // Create a new monster if none exists
+                        Enemy newMonster = EnemyCatalog.enemyFromCatalog(1); // Adjust catalog ID as needed
+                        tile.setMonster(newMonster);
+                    }
+                }
+            }
         }
     }
 }

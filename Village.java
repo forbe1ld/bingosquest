@@ -1,5 +1,3 @@
-package com.cmu;
-
 public class Village 
 {
     // Method to place the village marker at a specified tile
