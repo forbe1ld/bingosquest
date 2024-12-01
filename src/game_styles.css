@@ -1,0 +1,120 @@
+
+@font-face {
+    font-family: 'alagard';
+    src: url('alagard.ttf');
+}
+
+.root {
+    -fx-font-family: 'alagard';
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-font-family: 'alagard';
+    -fx-font-size: 24px;
+    -fx-background-color: linear-gradient(#333, #111);
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#444, #222);
+    -fx-border-color: yellow;
+}
+
+.label {
+    -fx-font-family: 'alagard';
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+}
+
+.dialog-pane {
+    -fx-background-color: black;
+    -fx-border-color: gold;
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: darkgoldenrod;
+    -fx-text-fill: white;
+    -fx-font-family: 'alagard';
+    -fx-font-size: 18px;
+}
+
+.dialog-pane .content {
+    -fx-text-fill: white;
+    -fx-font-family: 'alagard';
+    -fx-font-size: 14px;
+}
+
+.dialog-pane .button-bar {
+    -fx-background-color: transparent;
+}
+
+.dialog-pane .button {
+    -fx-background-color: darkgoldenrod;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-family: 'alagard';
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#game-title {
+	-fx-font-family: 'alagard';
+	-fx-font-size: 48px;
+	-fx-text-fill: white;
+	-fx-padding: 50px 0 20px 0;
+}
+
+#shop-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: gold;
+    -fx-padding: 10px 0;
+    -fx-alignment: center;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.table-header-row {
+    -fx-background-color: darkgoldenrod; /* Dark gold background for header row */
+}
+
+.table-column-header {
+    -fx-background-color: darkgoldenrod; /* Dark gold background */
+    -fx-text-fill: white;         /* White text for contrast */
+    -fx-border-color: black;     /* Black border for definition */
+    -fx-border-width: 1px;
+    -fx-alignment: center;       /* Center-align text */
+    -fx-font-weight: bold;       /* Bold text for headers */
+}
+
+.table-column {
+    -fx-alignment: center;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: transparent transparent white transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
